@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time left before the Finals</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <span class="accuracy-warning"
+      >Note: Countdown accuracy may vary slightly.</span
+    >
+    <div class="countdown-container">
+      <h1>Countdown to Final Examination</h1>
+      <div class="timer">
+        <div class="time">
+          <span id="months-main"></span>
+          <div class="label">Months</div>
+        </div>
+        <div class="time">
+          <span id="days-main"></span>
+          <div class="label">Days</div>
+        </div>
+        <div class="time">
+          <span id="hours-main"></span>
+          <div class="label">Hours</div>
+        </div>
+        <div class="time">
+          <span id="minutes-main"></span>
+          <div class="label">Minutes</div>
+        </div>
+        <div class="time">
+          <span id="seconds-main"></span>
+          <div class="label">Seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="individual-timers">
+      <h2>Individual Timers</h2>
+      <div class="timer-single">
+        <span>Total Seconds:</span> <span id="seconds-only"></span>
+      </div>
+      <div class="timer-single">
+        <span>Total Minutes:</span> <span id="minutes-only"></span>
+      </div>
+      <div class="timer-single">
+        <span>Total Hours:</span> <span id="hours-only"></span>
+      </div>
+      <div class="timer-single">
+        <span>Total Days:</span> <span id="days-only"></span>
+      </div>
+      <div class="timer-single">
+        <span>Total Months:</span> <span id="months-only"></span>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

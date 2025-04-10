@@ -1,0 +1,152 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #121212; /* Dark background */
+  color: #f4f4f4; /* Light text */
+  margin: 0;
+  padding: 1.25rem; /* Equivalent to 20px (assuming root font size is 16px) */
+  position: relative; /* For absolute positioning of the warning */
+  text-align: center; /* Center text for smaller screens */
+  font-size: 1rem; /* Base font size */
+}
+
+.accuracy-warning {
+  position: absolute;
+  top: 0.625rem; /* Equivalent to 10px */
+  left: 0.625rem; /* Equivalent to 10px */
+  font-size: 0.7em; /* Relative to the parent's font size */
+  color: #999;
+}
+
+.countdown-container {
+  background-color: #212121; /* Darker container background */
+  padding: 1.25rem; /* Equivalent to 20px */
+  border-radius: 0.5rem; /* Equivalent to 8px */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2); /* Equivalent to 2px 4px */
+  margin-bottom: 1.25rem; /* Equivalent to 20px */
+  width: 90%; /* Take up more width on mobile */
+  max-width: 25rem; /* Equivalent to 400px */
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.9375rem; /* Equivalent to 15px */
+  color: #f4f4f4;
+}
+
+.timer {
+  display: flex;
+  gap: 0.625rem; /* Equivalent to 10px */
+  justify-content: center;
+  flex-wrap: wrap; /* Allow items to wrap to the next line on small screens */
+}
+
+.time {
+  background-color: #333; /* Darker time unit background */
+  padding: 0.625rem; /* Equivalent to 10px */
+  border-radius: 0.375rem; /* Equivalent to 6px */
+  text-align: center;
+  min-width: 3.75rem; /* Equivalent to 60px */
+}
+
+span {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #eee; /* Lighter numbers */
+  display: block;
+}
+
+.label {
+  font-size: 0.7em; /* Relative to the parent's font size */
+  color: #ccc; /* Lighter labels */
+  margin-top: 0.1875rem; /* Equivalent to 3px */
+}
+
+.individual-timers {
+  background-color: #212121; /* Darker container background */
+  padding: 0.9375rem; /* Equivalent to 15px */
+  border-radius: 0.5rem; /* Equivalent to 8px */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2); /* Equivalent to 2px 4px */
+  text-align: center;
+  width: 90%; /* Take up more width on mobile */
+  max-width: 25rem; /* Equivalent to 400px */
+}
+
+.individual-timers h2 {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0.625rem; /* Equivalent to 10px */
+  color: #f4f4f4;
+}
+
+.timer-single {
+  margin-bottom: 0.5rem; /* Equivalent to 8px */
+  font-size: 1rem;
+  color: #ccc; /* Lighter text */
+}
+
+.timer-single span:first-child {
+  font-weight: bold;
+  margin-right: 0.5rem; /* Equivalent to 8px */
+}
+
+/* Media query for screens smaller than 600px (typical mobile devices) */
+@media (max-width: 37.5em) {
+  /* 37.5em = 600px / 16px */
+  body {
+    padding: 1rem;
+    font-size: 0.9rem; /* Slightly smaller base font on very small screens */
+  }
+
+  .accuracy-warning {
+    font-size: 0.6em;
+  }
+
+  .countdown-container {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .timer {
+    gap: 0.3125rem; /* Equivalent to 5px */
+  }
+
+  .time {
+    min-width: 3.125rem; /* Equivalent to 50px */
+    padding: 0.5rem;
+  }
+
+  span {
+    font-size: 1.5rem;
+  }
+
+  .label {
+    font-size: 0.6em;
+  }
+
+  .individual-timers {
+    padding: 0.625rem;
+  }
+
+  .timer-single {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* Media query for wider devices (e.g., tablets and desktops) */
+@media (min-width: 60em) {
+  /* 60em = 960px / 16px */
+  .countdown-container {
+    max-width: 60%; /* Wider on larger screens */
+  }
+}

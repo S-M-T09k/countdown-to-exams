@@ -15,11 +15,12 @@ body {
 }
 
 .accuracy-warning {
-  position: absolute;
-  top: 0.625rem; /* Equivalent to 10px */
-  left: 0.625rem; /* Equivalent to 10px */
+  position: fixed;
+  bottom: 0.5rem; /* Equivalent to 10px */
+  left: 0.5rem; /* Equivalent to 10px */
   font-size: 0.7em; /* Relative to the parent's font size */
   color: #999;
+  z-index: -1;
 }
 
 .countdown-container {

@@ -183,3 +183,11 @@ function formatTime(time) {
 const intervalId = setInterval(updateCountdown, 100);
 // Call updateCountdown once when the page loads
 updateCountdown();
+
+console.log(`
+  I assumed that the final examination would be on 16th March 2026 at 9:00 AM.
+  so, the countdown may not be completely correct
+  I can't know for sure when the exams will be
+  either way, this is the best I can do
+  should I make an app out of this?
+`);

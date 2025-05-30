@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Exams Countdown</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        .countdown-value, .total-value {
+            font-variant-numeric: tabular-nums; /* Keeps width of numbers consistent */
+        }
+
+        /* Gradient text for main title (if we were to use one, but now it's solid) */
+        /* .gradient-text-purple-blue {
+            background-image: linear-gradient(to right, #a78bfa, #7c3aed, #3b82f6); 
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        } */
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-200 via-indigo-200 to-sky-200 text-slate-700 flex flex-col items-center justify-center min-h-screen p-4 selection:bg-purple-600 selection:text-white">
+
+    <div class="text-center max-w-4xl w-full">
+        <header class="mb-10 sm:mb-12">
+            <h1 id="main-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700">
+                Final Exams Countdown
+                <span class="text-xs sm:text-sm align-middle text-slate-500 font-normal">(estimate)</span>
+            </h1>
+            <p class="text-slate-600 mt-2 text-sm sm:text-base">Time remaining until March 16, 2026, 9:00 AM</p>
+        </header>
+
+        <div id="main-countdown-container" class="mb-12">
+            <div id="main-countdown" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 text-center">
+                <div class="bg-white p-3 sm:p-5 rounded-lg shadow-xl">
+                    <div class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700 countdown-value" id="main-months-val">00</div>
+                    <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wider mt-1">Months</div>
+                </div>
+                <div class="bg-white p-3 sm:p-5 rounded-lg shadow-xl">
+                    <div class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700 countdown-value" id="main-days-val">00</div>
+                    <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wider mt-1">Days</div>
+                </div>
+                <div class="bg-white p-3 sm:p-5 rounded-lg shadow-xl">
+                    <div class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700 countdown-value" id="main-hours-val">00</div>
+                    <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wider mt-1">Hours</div>
+                </div>
+                <div class="bg-white p-3 sm:p-5 rounded-lg shadow-xl">
+                    <div class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700 countdown-value" id="main-minutes-val">00</div>
+                    <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wider mt-1">Minutes</div>
+                </div>
+                <div class="bg-white p-3 sm:p-5 rounded-lg shadow-xl col-span-2 sm:col-span-1 md:col-auto">
+                    <div class="text-4xl sm:text-5xl lg:text-6xl font-bold text-purple-700 countdown-value" id="main-seconds-val">00.0</div>
+                    <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wider mt-1">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="total-counters-container" class="mb-12 w-full max-w-md mx-auto">
+            <h2 id="total-counters-title" class="text-2xl sm:text-3xl font-semibold mb-6 text-indigo-600">Total Time Remaining (Detailed)</h2>
+            <div id="total-counters" class="grid grid-cols-1 gap-4 text-left text-sm sm:text-lg bg-white p-4 sm:p-6 rounded-lg shadow-xl">
+                <div class="border-b border-slate-200 pb-3 mb-3 flex justify-between items-center">
+                    <span class="text-slate-600">Total Seconds:</span>
+                    <span id="total-seconds" class="font-mono text-sky-700 total-value">0.00</span>
+                </div>
+                <div class="border-b border-slate-200 pb-3 mb-3 flex justify-between items-center">
+                    <span class="text-slate-600">Total Minutes:</span>
+                    <span id="total-minutes" class="font-mono text-sky-700 total-value">0.0000</span>
+                </div>
+                <div class="border-b border-slate-200 pb-3 mb-3 flex justify-between items-center">
+                    <span class="text-slate-600">Total Hours:</span>
+                    <span id="total-hours" class="font-mono text-sky-700 total-value">0.000000</span>
+                </div>
+                <div class="border-b border-slate-200 pb-3 mb-3 flex justify-between items-center">
+                    <span class="text-slate-600">Total Days:</span>
+                    <span id="total-days" class="font-mono text-sky-700 total-value">0.0000000</span>
+                </div>
+                <div class="flex justify-between items-center"> <span class="text-slate-600">Total Months (avg):</span>
+                    <span id="total-months" class="font-mono text-sky-700 total-value">0.00000000</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="countdown-ended" class="hidden mt-12 text-3xl sm:text-4xl font-bold text-green-600">
+            The time has come! Good luck with your exams!
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const targetDate = new Date("2026-03-16T09:00:00");
+
+            // --- DOM Elements for Main Countdown Values ---
+            const elMainMonthsVal = document.getElementById('main-months-val');
+            const elMainDaysVal = document.getElementById('main-days-val');
+            const elMainHoursVal = document.getElementById('main-hours-val');
+            const elMainMinutesVal = document.getElementById('main-minutes-val');
+            const elMainSecondsVal = document.getElementById('main-seconds-val');
+
+            // --- DOM Elements for Total Counters ---
+            const elTotalMonths = document.getElementById('total-months');
+            const elTotalDays = document.getElementById('total-days');
+            const elTotalHours = document.getElementById('total-hours');
+            const elTotalMinutes = document.getElementById('total-minutes');
+            const elTotalSeconds = document.getElementById('total-seconds');
+
+            const mainCountdownContainer = document.getElementById('main-countdown-container');
+            const totalCountersContainer = document.getElementById('total-counters-container');
+            const countdownEndedMessage = document.getElementById('countdown-ended');
+            const mainPageTitle = document.getElementById('main-title');
+            const subTitle = document.querySelector('header p');
+
+            let intervalId;
+
+            function updateCountdown() {
+                const now = new Date();
+                const timeLeft = targetDate.getTime() - now.getTime();
+
+                if (timeLeft <= 0) {
+                    clearInterval(intervalId);
+                    if(mainCountdownContainer) mainCountdownContainer.classList.add('hidden');
+                    if(totalCountersContainer) totalCountersContainer.classList.add('hidden');
+                    if(countdownEndedMessage) countdownEndedMessage.classList.remove('hidden');
+                    
+                    // Update title text content, preserving the estimate span
+                    const estimateSpanHTML = mainPageTitle.querySelector('span')?.outerHTML || '';
+                    mainPageTitle.innerHTML = "Exam Time! " + estimateSpanHTML;
+
+                    if(subTitle) subTitle.classList.add('hidden');
+                    
+                    // Set all main countdown values to 0 or 0.0
+                    if(elMainMonthsVal) elMainMonthsVal.textContent = "00";
+                    if(elMainDaysVal) elMainDaysVal.textContent = "00";
+                    if(elMainHoursVal) elMainHoursVal.textContent = "00";
+                    if(elMainMinutesVal) elMainMinutesVal.textContent = "00";
+                    if(elMainSecondsVal) elMainSecondsVal.textContent = "00.0";
+
+                    // Set total counters to 0 with correct decimal places
+                    if(elTotalMonths) elTotalMonths.textContent = (0).toFixed(8);
+                    if(elTotalDays) elTotalDays.textContent = (0).toFixed(7);
+                    if(elTotalHours) elTotalHours.textContent = (0).toFixed(6);
+                    if(elTotalMinutes) elTotalMinutes.textContent = (0).toFixed(4);
+                    if(elTotalSeconds) elTotalSeconds.textContent = (0).toFixed(2);
+                    return;
+                }
+
+                // --- Main Countdown Calculation (H, M, S part from total timeLeft) ---
+                const s_total_for_main = Math.floor(timeLeft / 1000);
+                const s_main_integer = s_total_for_main % 60;
+                const m_main = Math.floor(s_total_for_main / 60) % 60;
+                const h_main = Math.floor(s_total_for_main / 3600) % 24;
+                
+                const s_main_decimal_val = Math.floor((timeLeft % 1000) / 100);
+
+                // --- Main Countdown Calculation (Months and Days part - calendar difference) ---
+                let y_diff = targetDate.getFullYear() - now.getFullYear();
+                let m_diff = targetDate.getMonth() - now.getMonth();
+                let d_diff = targetDate.getDate() - now.getDate();
+
+                if (now.getHours() > targetDate.getHours() ||
+                    (now.getHours() === targetDate.getHours() && now.getMinutes() > targetDate.getMinutes()) ||
+                    (now.getHours() === targetDate.getHours() && now.getMinutes() === targetDate.getMinutes() && now.getSeconds() >= targetDate.getSeconds())
+                   ) {
+                     if (targetDate.getTime() > now.getTime()){ 
+                        d_diff--;
+                     }
+                }
+
+                if (d_diff < 0) {
+                    m_diff--;
+                    const daysInCurrentMonthOfNow = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                    d_diff += daysInCurrentMonthOfNow; 
+                }
+
+                if (m_diff < 0) {
+                    y_diff--;
+                    m_diff += 12;
+                }
+
+                let displayMonths = y_diff * 12 + m_diff;
+                let displayDays = d_diff;
+                
+                if (displayMonths < 0) displayMonths = 0;
+                if (displayDays < 0) displayDays = 0;
+
+                // --- Update Main Countdown DOM ---
+                if(elMainMonthsVal) elMainMonthsVal.textContent = String(displayMonths).padStart(2, '0');
+                if(elMainDaysVal) elMainDaysVal.textContent = String(displayDays).padStart(2, '0');
+                if(elMainHoursVal) elMainHoursVal.textContent = String(h_main).padStart(2, '0');
+                if(elMainMinutesVal) elMainMinutesVal.textContent = String(m_main).padStart(2, '0');
+                if(elMainSecondsVal) elMainSecondsVal.textContent = String(s_main_integer).padStart(2, '0') + "." + String(s_main_decimal_val);
+
+
+                // --- Total Counters Calculation ---
+                const totalSecondsRaw = timeLeft / 1000;
+                const totalMinutes = totalSecondsRaw / 60;
+                const totalHours = totalMinutes / 60;
+                const totalDays = totalHours / 24;
+                const averageDaysInMonth = 365.25 / 12; 
+                const totalMonths = totalDays / averageDaysInMonth;
+
+                // --- Update Total Counters DOM (Adjusted toFixed for ~10-12 digits total) ---
+                if(elTotalSeconds) elTotalSeconds.textContent = totalSecondsRaw.toFixed(2);     // e.g., XXXXXXXX.XX (11)
+                if(elTotalMinutes) elTotalMinutes.textContent = totalMinutes.toFixed(4);     // e.g., XXXXXX.XXXX (11)
+                if(elTotalHours) elTotalHours.textContent = totalHours.toFixed(6);         // e.g., XXXX.XXXXXX (11)
+                if(elTotalDays) elTotalDays.textContent = totalDays.toFixed(7);           // e.g., XXX.XXXXXXX (11)
+                if(elTotalMonths) elTotalMonths.textContent = totalMonths.toFixed(8);       // e.g., XX.XXXXXXXX (11)
+            }
+            
+            updateCountdown(); 
+            intervalId = setInterval(updateCountdown, 100); // Update every 100ms
+        });
+    </script>
+
+</body>
+</html>

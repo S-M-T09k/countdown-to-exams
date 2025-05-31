@@ -1,0 +1,152 @@
+/* Import Google Fonts and user's Digital-7 Mono font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+@import url("https://fonts.cdnfonts.com/css/digital-7-mono"); /* User's font */
+
+body {
+  font-family: "Inter", sans-serif;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* overflow-x: hidden; */ /* Might be needed if flip cards cause overflow during animation */
+}
+
+/* Main title gradient */
+#main-title {
+  background-image: linear-gradient(
+    to right,
+    #a855f7,
+    #6366f1,
+    #38bdf8
+  ); /* Brighter Purple -> Indigo -> Sky Blue */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Flipdown Counter Styles */
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flip-card-group {
+  display: flex;
+  align-items: flex-end; /* Align cards and decimal point nicely */
+}
+
+.flip-card {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 0.2em; /* Slightly rounded corners for cards */
+  margin: 0 0.1em; /* Small gap between digit cards */
+
+  /* Dimensions for flip cards - adjust based on font size */
+  /* Using ems makes them scale with font-size */
+  font-size: 3rem; /* Base size, overridden by Tailwind for responsiveness */
+  line-height: 1; /* Ensure text is tight within the card */
+}
+
+/* Responsive font sizes for flip cards using Tailwind's breakpoints as a guide */
+@media (min-width: 640px) {
+  /* sm */
+  .flip-card {
+    font-size: 4rem;
+  }
+}
+@media (min-width: 768px) {
+  /* md */
+  .flip-card {
+    font-size: 5rem;
+  }
+}
+/* @media (min-width: 1024px) { lg - covered by md or could be larger } */
+
+.flip-card .card-face {
+  position: absolute;
+  height: 50%; /* Each face is half the card */
+  width: 100%;
+  left: 0;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #374151; /* slate-700, a bit darker than user's bg-slate-800 for contrast */
+  color: #f1f6f2; /* User's custom-light color */
+  font-family: "Digital-7 Mono", sans-serif; /* User's specified font */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1em; /* Small padding inside card faces */
+  box-sizing: border-box;
+}
+
+.flip-card .card-top {
+  top: 0;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  align-items: flex-end; /* Number at the bottom of the top half */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* Line between top/bottom */
+}
+
+.flip-card .card-bottom {
+  bottom: 0;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  align-items: flex-start; /* Number at the top of the bottom half */
+}
+
+.flip-card .card-back {
+  background-color: #4b5563; /* slate-600, slightly lighter for the flipping part */
+}
+
+.flip-card .card-back-top {
+  top: 0;
+  transform: rotateX(180deg); /* Initially flipped back */
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  align-items: flex-end;
+}
+
+.flip-card .card-back-bottom {
+  bottom: 0;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  align-items: flex-start;
+}
+
+/* Animation */
+.flip-card.flipped .card-top {
+  transform: rotateX(180deg);
+  transition: transform 0.5s ease-in-out; /* Slower for more visible flip */
+}
+
+.flip-card.flipped .card-back-top {
+  transform: rotateX(0deg); /* Flips into view */
+  transition: transform 0.5s ease-in-out;
+}
+
+.unit-label {
+  font-size: 0.7rem; /* Tailwind text-xs is 0.75rem */
+  color: #9ca3af; /* slate-400 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+/* Styling for the decimal point in the seconds unit */
+.decimal-point {
+  font-family: "Digital-7 Mono", sans-serif; /* Match flip card font */
+  /* Tailwind text-custom-light is #F1F6F2 */
+  /* Tailwind text-4xl, sm:text-5xl, md:text-6xl used in HTML */
+  /* margin adjusted in HTML */
+  align-self: flex-end; /* Align with bottom of flip cards */
+  padding-bottom: 0.15em; /* Fine-tune vertical alignment with card numbers */
+}
+
+/* Total counters use Digital-7 Mono as per user's original HTML */
+.total-value {
+  font-family: "Digital-7 Mono", sans-serif;
+}

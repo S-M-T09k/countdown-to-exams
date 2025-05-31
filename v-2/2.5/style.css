@@ -1,0 +1,40 @@
+/* Import Google Fonts and user's Digital-7 Mono font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+@import url("https://fonts.cdnfonts.com/css/digital-7-mono"); /* User's font */
+
+body {
+  font-family: "Inter", sans-serif;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Main title gradient */
+#main-title {
+  background-image: linear-gradient(
+    to right,
+    #a855f7,
+    #6366f1,
+    #38bdf8
+  ); /* Brighter Purple -> Indigo -> Sky Blue */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Styles for the main countdown values and total values (using user's font) */
+.countdown-value,
+.total-value {
+  font-family: "Digital-7 Mono", sans-serif;
+  font-variant-numeric: tabular-nums; /* Keeps width of numbers consistent */
+}
+
+/* Label for countdown units (Months, Days, etc.) */
+.unit-label {
+  font-size: 0.7rem; /* Tailwind text-xs is 0.75rem */
+  color: #9ca3af; /* slate-400 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+  margin-top: 0.25rem; /* mt-1 (was mt-2 in flip, adjusted for simpler layout) */
+}

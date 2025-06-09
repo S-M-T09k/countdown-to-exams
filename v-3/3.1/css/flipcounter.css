@@ -1,0 +1,136 @@
+/**
+ * FONT IMPORTS
+ * Roboto is used for the labels (Hours, Minutes, etc.).
+ * Digital-7 Mono is used for the numbers for a classic clock look.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/digital-7-mono');
+
+/**
+ * FLIP CLOCK COMPONENT STYLES
+ * All styles are scoped to the `.flip-clock` container to prevent conflicts.
+ */
+
+.flip-clock {
+    display: inline-flex; /* Use inline-flex to allow multiple clocks side-by-side if needed */
+    gap: 1.5rem; /* Space between the time units (e.g., between Hours and Minutes) */
+    font-family: 'Roboto', sans-serif;
+}
+
+.flip-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.unit-label {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9ca3af; /* text-gray-400 */
+}
+
+/* Container for a pair of digits (e.g., the '3' and '5' in '35') */
+.digit-group {
+    display: flex;
+    gap: 0.5rem; /* Space between the two digits of a single unit */
+
+    /*
+     * PERSPECTIVE
+     * This is crucial for the 3D effect. It defines how "deep" the 3D space is.
+     * Without it, the rotation would look like a flat 2D transform.
+     */
+    perspective: 300px;
+}
+
+/*
+ * FLIP CARD
+ * This is the container for a single digit (e.g., the '5').
+ * It holds all the faces needed for the flip animation.
+ */
+.flip-card {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+
+    /* Base dimensions - these can be adjusted */
+    width: 3.75rem;  /* 60px */
+    height: 5rem;    /* 80px */
+    font-size: 4.5rem; /* 72px */
+
+    /* Styling */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem;
+    color: #f3f4f6; /* text-gray-100 */
+    font-family: 'Digital-7 Mono', sans-serif;
+}
+
+/*
+ * CARD FACE
+ * This is a generic style for all the pieces of a digit card.
+ * There are three primary pieces needed for this animation style:
+ * 1. .top          (Front, top half, shows CURRENT number)
+ * 2. .bottom        (Front, bottom half, shows NEW number - updated before animation)
+ * 3. .back          (Back, top half, holds NEW number, flips down over .top)
+ */
+.flip-card .card-face {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    overflow: hidden; /* Hide the other half of the number in the span */
+    
+    /* Content alignment */
+    display: flex;
+    justify-content: center;
+
+    /* Base styling */
+    background-color: #374151; /* bg-gray-700 */
+    border: 1px solid #1f2937; /* bg-gray-800 */
+}
+
+/* The top half of the front face. This is the part that will be covered by the flip. */
+.flip-card .top {
+    top: 0;
+    align-items: flex-end; /* Number sits at the bottom edge */
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+.flip-card .top span {
+    transform: translateY(50%); /* Centers the number vertically in its half */
+}
+
+/* The bottom half of the front face. This shows the new digit immediately. */
+.flip-card .bottom {
+    bottom: 0;
+    align-items: flex-start; /* Number sits at the top edge */
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+.flip-card .bottom span {
+    transform: translateY(-50%); /* Centers the number vertically in its half */
+}
+
+/* The "back" face which is actually the flipping flap. It starts on top, showing the current digit. */
+.flip-card .back {
+    top: 0;
+    align-items: flex-end;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden; /* Prevents flickering during 3D transforms */
+    transform-origin: bottom center; /* The flip hinge is at the bottom */
+}
+.flip-card .back span {
+    transform: translateY(50%);
+}
+
+/**
+ * ANIMATION
+ * The 'go' class is added by JavaScript to trigger the flip.
+ */
+.flip-card.go .back {
+    transform: rotateX(-180deg);
+    transition: transform 0.6s cubic-bezier(.45,.05,.55,.95); /* A nice easing function for the flip */
+}
